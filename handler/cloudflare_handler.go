@@ -125,6 +125,9 @@ func (handler *CloudflareHandler) DomainLoop(domain *godns.Domain, panicChan cha
 
 // Check if record is present in domain conf
 func recordTracked(domain *godns.Domain, record *DNSRecord) bool {
+	if domain.DomainName == record.Name {
+		return true
+	}
 	for _, subDomain := range domain.SubDomains {
 		sd := fmt.Sprintf("%s.%s", subDomain, domain.DomainName)
 		if record.Name == sd {
